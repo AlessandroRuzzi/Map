@@ -339,7 +339,7 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            mapView.showAnnotations(view.annotation, animated: true)
+            mapView.showAnnotations(view.annotation as! [any MKAnnotation], animated: true)
             // if let clustered = view.annotation as? MKClusterAnnotation {
             //         var minLat = CLLocationDegrees(exactly: 90)!
             //         var maxLat = CLLocationDegrees(exactly: -90)!
