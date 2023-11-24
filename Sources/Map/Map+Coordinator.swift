@@ -356,7 +356,13 @@ extension Map {
                     let centerLat = (minLat + maxLat) / 2
                     let centerLong = (minLong + maxLong) / 2
                     let center = CLLocationCoordinate2D(latitude: centerLat, longitude: centerLong)
-                    let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1, longitudeDelta: (maxLong - minLong) * 1) // with some padding
+                    if minLat == maxLat && minLong == maxLong {
+                        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                        let region = MKCoordinateRegion(center: center, span: span)
+                        mapView.setRegion(region, animated: true)
+                        return
+                    }
+                    let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.5, longitudeDelta: (maxLong - minLong) * 1.5) // with some padding
                     let region = MKCoordinateRegion(center: center, span: span)
 
                     mapView.setRegion(region, animated: true)
