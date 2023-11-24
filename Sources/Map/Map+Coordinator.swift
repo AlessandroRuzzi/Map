@@ -339,8 +339,9 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            mapView.showAnnotations(view.annotation as! [any MKAnnotation], animated: true)
-            // if let clustered = view.annotation as? MKClusterAnnotation {
+            
+            if let clustered = view.annotation as? MKClusterAnnotation {
+                mapView.showAnnotations(clustered.memberAnnotations, animated: true)
             //         var minLat = CLLocationDegrees(exactly: 90)!
             //         var maxLat = CLLocationDegrees(exactly: -90)!
             //         var minLong = CLLocationDegrees(exactly: 180)!
@@ -360,7 +361,7 @@ extension Map {
             //         let region = MKCoordinateRegion(center: center, span: span)
 
             //         mapView.setRegion(region, animated: true)
-            // }
+            }
         }
 
     }
