@@ -362,9 +362,12 @@ extension Map {
                         mapView.setRegion(region, animated: true)
                         return
                     }
-                    let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.5, longitudeDelta: (maxLong - minLong) * 1.5) // with some padding
+                    var span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.5, longitudeDelta: (maxLong - minLong) * 1.5) // with some padding
+                    if center.latitude == mapView.region.center.latitude && center.longitude == mapView.region.center.longitude && span.latitudeDelta == mapView.region.span.latitudeDelta && span.longitudeDelta == mapView.region.span.longitudeDelta {
+                        span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta * 0.7, longitudeDelta: span.longitudeDelta * 0.7)
+                    }
                     let region = MKCoordinateRegion(center: center, span: span)
-
+                    
                     mapView.setRegion(region, animated: true)
             }
         }
