@@ -318,8 +318,8 @@ extension Map {
             print("annotation prints")
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
-            } else 
-            if let clusterAnnotation = annotation as? MKClusterAnnotation {
+            } 
+            else if let clusterAnnotation = annotation as? MKClusterAnnotation {
                 let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
                     guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
                         assertionFailure("Somehow a cluster contains an unknown annotation item.")
@@ -376,41 +376,6 @@ extension Map {
         Coordinator()
     }
 
-}
-
-class LandmarkAnnotation: NSObject, MKAnnotation {
-let coordinate: CLLocationCoordinate2D
-init(
-     coordinate: CLLocationCoordinate2D
-) {
-    self.coordinate = coordinate
-    super.init()
-}
-}
-
-
-/// here posible to customize annotation view
-let clusterID = "clustering"
-
-class AnnotationView: MKMarkerAnnotationView {
-
-static let ReuseID = "cultureAnnotation"
-
-/// setting the key for clustering annotations
-override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-    super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-    clusteringIdentifier = clusterID
-}
-
-
-required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-}
-
-override func prepareForDisplay() {
-    super.prepareForDisplay()
-    displayPriority = .defaultLow
- }
 }
 
 #endif

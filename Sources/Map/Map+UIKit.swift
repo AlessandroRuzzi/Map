@@ -17,12 +17,11 @@ extension Map: UIViewRepresentable {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         updateUIView(mapView, context: context)
-        context.coordinator.update(mapView, from: self, context: context)
         return mapView
     }
 
     public func updateUIView(_ mapView: MKMapView, context: Context) {
-        // context.coordinator.update(mapView, from: self, context: context)
+        context.coordinator.update(mapView, from: self, context: context)
     }
 
 }
