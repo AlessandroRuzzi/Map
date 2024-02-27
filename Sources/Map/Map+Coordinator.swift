@@ -315,6 +315,7 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            print("annotation prints")
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
             } else 
