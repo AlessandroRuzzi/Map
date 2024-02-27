@@ -332,6 +332,8 @@ extension Map {
             // } else {
             //     return nil
             // }
+
+            return content.view(for: mapView)
         }
 
         public func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
