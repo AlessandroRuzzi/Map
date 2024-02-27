@@ -333,7 +333,7 @@ extension Map {
             //     return nil
             // }
 
-            return content.view(for: mapView)
+            return nil
         }
 
         public func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
