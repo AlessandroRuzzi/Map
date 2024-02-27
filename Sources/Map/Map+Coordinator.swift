@@ -48,14 +48,14 @@ extension Map {
             defer { view = newView }
             let animation = context.transaction.animation
             // updateAnnotations(on: mapView, from: view, to: newView)
-            updateCamera(on: mapView, context: context, animated: animation != nil)
-            updateInformationVisibility(on: mapView, from: view, to: newView)
-            updateInteractionModes(on: mapView, from: view, to: newView)
-            updateOverlays(on: mapView, from: view, to: newView)
-            updatePointOfInterestFilter(on: mapView, from: view, to: newView)
+            // updateCamera(on: mapView, context: context, animated: animation != nil)
+            // updateInformationVisibility(on: mapView, from: view, to: newView)
+            // updateInteractionModes(on: mapView, from: view, to: newView)
+            // updateOverlays(on: mapView, from: view, to: newView)
+            // updatePointOfInterestFilter(on: mapView, from: view, to: newView)
             updateRegion(on: mapView, from: view, to: newView, animated: animation != nil)
-            updateType(on: mapView, from: view, to: newView)
-            updateUserTracking(on: mapView, from: view, to: newView)
+            // updateType(on: mapView, from: view, to: newView)
+            // updateUserTracking(on: mapView, from: view, to: newView)
 
             if let key = context.environment.mapKey {
                 MapRegistry[key] = mapView
