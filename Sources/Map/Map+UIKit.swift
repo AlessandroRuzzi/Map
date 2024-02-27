@@ -27,7 +27,7 @@ extension Map: UIViewRepresentable {
         view.setRegion(region, animated: false)
         view.mapType = .standard
         
-        for points in forDisplay {
+        for points in self.annotationItems {
             let annotation = LandmarkAnnotation(coordinate: points.coordinate)
             view.addAnnotation(annotation)
         }
