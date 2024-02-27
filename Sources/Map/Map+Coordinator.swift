@@ -47,15 +47,15 @@ extension Map {
         func update(_ mapView: MKMapView, from newView: Map, context: Context) {
             defer { view = newView }
             let animation = context.transaction.animation
-            // updateAnnotations(on: mapView, from: view, to: newView)
-            // updateCamera(on: mapView, context: context, animated: animation != nil)
-            // updateInformationVisibility(on: mapView, from: view, to: newView)
-            // updateInteractionModes(on: mapView, from: view, to: newView)
-            // updateOverlays(on: mapView, from: view, to: newView)
-            // updatePointOfInterestFilter(on: mapView, from: view, to: newView)
+            updateAnnotations(on: mapView, from: view, to: newView)
+            updateCamera(on: mapView, context: context, animated: animation != nil)
+            updateInformationVisibility(on: mapView, from: view, to: newView)
+            updateInteractionModes(on: mapView, from: view, to: newView)
+            updateOverlays(on: mapView, from: view, to: newView)
+            updatePointOfInterestFilter(on: mapView, from: view, to: newView)
             updateRegion(on: mapView, from: view, to: newView, animated: animation != nil)
-            // updateType(on: mapView, from: view, to: newView)
-            // updateUserTracking(on: mapView, from: view, to: newView)
+            updateType(on: mapView, from: view, to: newView)
+            updateUserTracking(on: mapView, from: view, to: newView)
 
             if let key = context.environment.mapKey {
                 MapRegistry[key] = mapView
@@ -332,13 +332,15 @@ extension Map {
             // } else {
             //     return nil
             // }
-
-            return nil
+            guard let annotation = annotation as? LandmarkAnnotation else { return nil }
+            return AnnotationView(annotation: annotation, reuseIdentifier: AnnotationView.ReuseID)
         }
 
-        public func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-            MKClusterAnnotation(memberAnnotations: memberAnnotations)
-        }
+        
+
+        // public func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        //     MKClusterAnnotation(memberAnnotations: memberAnnotations)
+        // }
 
         public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
             
@@ -373,6 +375,41 @@ extension Map {
         Coordinator()
     }
 
+}
+
+class LandmarkAnnotation: NSObject, MKAnnotation {
+let coordinate: CLLocationCoordinate2D
+init(
+     coordinate: CLLocationCoordinate2D
+) {
+    self.coordinate = coordinate
+    super.init()
+}
+}
+
+
+/// here posible to customize annotation view
+let clusterID = "clustering"
+
+class AnnotationView: MKMarkerAnnotationView {
+
+static let ReuseID = "cultureAnnotation"
+
+/// setting the key for clustering annotations
+override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+    clusteringIdentifier = clusterID
+}
+
+
+required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+}
+
+override func prepareForDisplay() {
+    super.prepareForDisplay()
+    displayPriority = .defaultLow
+ }
 }
 
 #endif
