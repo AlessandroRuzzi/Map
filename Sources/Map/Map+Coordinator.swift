@@ -33,6 +33,7 @@ extension Map {
         private var registeredAnnotationTypes = Set<ObjectIdentifier>()
         private var regionIsChanging = false
         private var isInitialRegionChange = true
+        private var isMapInitialized = false
 
         // MARK: Initialization
 
@@ -314,6 +315,7 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            print("annotation print")
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
             } else if let clusterAnnotation = annotation as? MKClusterAnnotation {
@@ -327,7 +329,7 @@ extension Map {
                 guard let content = view?.clusterAnnotation(clusterAnnotation, members) else {
                     return nil
                 }
-                // registerAnnotationViewIfNeeded(on: mapView, for: content)
+                registerAnnotationViewIfNeeded(on: mapView, for: content)
                 return content.view(for: mapView)
             } else {
                 return nil
