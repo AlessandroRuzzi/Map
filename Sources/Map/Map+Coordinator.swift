@@ -47,7 +47,7 @@ extension Map {
         func update(_ mapView: MKMapView, from newView: Map, context: Context) {
             defer { view = newView }
             let animation = context.transaction.animation
-            updateAnnotations(on: mapView, from: view, to: newView)
+            // updateAnnotations(on: mapView, from: view, to: newView)
             updateCamera(on: mapView, context: context, animated: animation != nil)
             updateInformationVisibility(on: mapView, from: view, to: newView)
             updateInteractionModes(on: mapView, from: view, to: newView)
@@ -357,9 +357,6 @@ extension Map {
                     let centerLong = (minLong + maxLong) / 2
                     let center = CLLocationCoordinate2D(latitude: centerLat, longitude: centerLong)
                     let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.3, longitudeDelta: (maxLong - minLong) * 1.3) // with some padding
-                    // if center.latitude == mapView.region.center.latitude && center.longitude == mapView.region.center.longitude && span.latitudeDelta == mapView.region.span.latitudeDelta && span.longitudeDelta == mapView.region.span.longitudeDelta {
-                    //     span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta * 0.7, longitudeDelta: span.longitudeDelta * 0.7)
-                    // }
                     let region = MKCoordinateRegion(center: center, span: span)
                     
                     mapView.setRegion(region, animated: true)
