@@ -315,10 +315,10 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            print("annotation print")
-            // if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
-            //     return content.view(for: mapView)
-            // } else 
+            DispatchQueue.guaranteeMainQueue(inBackground: true) {
+            if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
+                return content.view(for: mapView)
+            } else 
             if let clusterAnnotation = annotation as? MKClusterAnnotation {
                 let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
                     guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
@@ -334,6 +334,7 @@ extension Map {
                 return content.view(for: mapView)
             } else {
                 return nil
+            }
             }
         }
 
