@@ -263,75 +263,75 @@ extension Map {
 
         // MARK: MKMapViewDelegate
 
-        // public func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        //     guard !regionIsChanging else {
-        //         return
-        //     }
-        //     view?.coordinateRegion = mapView.region
-        //     view?.mapRect = mapView.visibleMapRect
-        // }
+        public func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+            guard !regionIsChanging else {
+                return
+            }
+            view?.coordinateRegion = mapView.region
+            view?.mapRect = mapView.visibleMapRect
+        }
 
-        // @available(macOS 11, *)
-        // public func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
-        //     guard let view = view, view.usesUserTrackingMode else {
-        //         return
-        //     }
-        //     switch mode {
-        //     case .none:
-        //         view.userTrackingMode = .none
-        //     case .follow:
-        //         view.userTrackingMode = .follow
-        //     case .followWithHeading:
-        //         #if os(macOS) || os(tvOS)
-        //         view.userTrackingMode = .follow
-        //         #else
-        //         view.userTrackingMode = .followWithHeading
-        //         #endif
-        //     @unknown default:
-        //         assertionFailure("Encountered unknown user tracking mode")
-        //     }
-        // }
+        @available(macOS 11, *)
+        public func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+            guard let view = view, view.usesUserTrackingMode else {
+                return
+            }
+            switch mode {
+            case .none:
+                view.userTrackingMode = .none
+            case .follow:
+                view.userTrackingMode = .follow
+            case .followWithHeading:
+                #if os(macOS) || os(tvOS)
+                view.userTrackingMode = .follow
+                #else
+                view.userTrackingMode = .followWithHeading
+                #endif
+            @unknown default:
+                assertionFailure("Encountered unknown user tracking mode")
+            }
+        }
 
-        // public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        //     regionIsChanging = true
-        // }
+        public func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+            regionIsChanging = true
+        }
 
-        // public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        //     regionIsChanging = false
-        //     if isInitialRegionChange {
-        //         isInitialRegionChange = false
-        //     } else {
-        //         mapViewDidChangeVisibleRegion(mapView)
-        //     }
-        // }
+        public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            regionIsChanging = false
+            if isInitialRegionChange {
+                isInitialRegionChange = false
+            } else {
+                mapViewDidChangeVisibleRegion(mapView)
+            }
+        }
 
-        // public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        //     guard let content = overlayContentByObject[ObjectIdentifier(overlay)] else {
-        //         assertionFailure("Somehow an unknown overlay appeared.")
-        //         return MKOverlayRenderer(overlay: overlay)
-        //     }
-        //     return content.renderer(for: mapView)
-        // }
+        public func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            guard let content = overlayContentByObject[ObjectIdentifier(overlay)] else {
+                assertionFailure("Somehow an unknown overlay appeared.")
+                return MKOverlayRenderer(overlay: overlay)
+            }
+            return content.renderer(for: mapView)
+        }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
-                return content.view(for: mapView)
-            } else if let clusterAnnotation = annotation as? MKClusterAnnotation {
-                let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
-                    guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
-                        assertionFailure("Somehow a cluster contains an unknown annotation item.")
-                        return nil
-                    }
-                    return item
-                }
-                guard let content = view?.clusterAnnotation(clusterAnnotation, members) else {
-                    return nil
-                }
-                registerAnnotationViewIfNeeded(on: mapView, for: content)
-                return content.view(for: mapView)
-            } else {
-                return nil
-            }
+            // if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
+            //     return content.view(for: mapView)
+            // } else if let clusterAnnotation = annotation as? MKClusterAnnotation {
+            //     let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
+            //         guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
+            //             assertionFailure("Somehow a cluster contains an unknown annotation item.")
+            //             return nil
+            //         }
+            //         return item
+            //     }
+            //     guard let content = view?.clusterAnnotation(clusterAnnotation, members) else {
+            //         return nil
+            //     }
+            //     registerAnnotationViewIfNeeded(on: mapView, for: content)
+            //     return content.view(for: mapView)
+            // } else {
+            //     return nil
+            // }
         }
 
         
