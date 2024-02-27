@@ -315,7 +315,7 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            DispatchQueue.guaranteeMainQueue(inBackground: true) {
+            DispatchQueue.main.async {
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
             } else 
