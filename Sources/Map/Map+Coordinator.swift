@@ -319,18 +319,19 @@ extension Map {
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
             } else if let clusterAnnotation = annotation as? MKClusterAnnotation {
-                let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
-                    guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
-                        assertionFailure("Somehow a cluster contains an unknown annotation item.")
-                        return nil
-                    }
-                    return item
-                }
-                guard let content = view?.clusterAnnotation(clusterAnnotation, members) else {
-                    return nil
-                }
-                registerAnnotationViewIfNeeded(on: mapView, for: content)
-                return content.view(for: mapView)
+                // let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
+                //     guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
+                //         assertionFailure("Somehow a cluster contains an unknown annotation item.")
+                //         return nil
+                //     }
+                //     return item
+                // }
+                // guard let content = view?.clusterAnnotation(clusterAnnotation, members) else {
+                //     return nil
+                // }
+                // registerAnnotationViewIfNeeded(on: mapView, for: content)
+                // return content.view(for: mapView)
+                return nil
             } else {
                 return nil
             }
