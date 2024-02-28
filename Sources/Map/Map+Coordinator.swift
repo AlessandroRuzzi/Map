@@ -33,7 +33,6 @@ extension Map {
         private var registeredAnnotationTypes = Set<ObjectIdentifier>()
         private var regionIsChanging = false
         private var isInitialRegionChange = true
-        private var isMapInitialized = false
 
         // MARK: Initialization
 
@@ -315,11 +314,9 @@ extension Map {
         }
 
         public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            print("annotation prints")
             if let content = annotationContentByObject[ObjectIdentifier(annotation)] {
                 return content.view(for: mapView)
-            } 
-            else if let clusterAnnotation = annotation as? MKClusterAnnotation {
+            } else if let clusterAnnotation = annotation as? MKClusterAnnotation {
                 let members = clusterAnnotation.memberAnnotations.compactMap { annotation -> AnnotationItems.Element? in
                     guard let item = annotationItemByObject[ObjectIdentifier(annotation)] else {
                         assertionFailure("Somehow a cluster contains an unknown annotation item.")
@@ -336,8 +333,6 @@ extension Map {
                 return nil
             }
         }
-
-        
 
         public func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
             MKClusterAnnotation(memberAnnotations: memberAnnotations)
@@ -362,6 +357,9 @@ extension Map {
                     let centerLong = (minLong + maxLong) / 2
                     let center = CLLocationCoordinate2D(latitude: centerLat, longitude: centerLong)
                     let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.3, longitudeDelta: (maxLong - minLong) * 1.3) // with some padding
+                    // if center.latitude == mapView.region.center.latitude && center.longitude == mapView.region.center.longitude && span.latitudeDelta == mapView.region.span.latitudeDelta && span.longitudeDelta == mapView.region.span.longitudeDelta {
+                    //     span = MKCoordinateSpan(latitudeDelta: span.latitudeDelta * 0.7, longitudeDelta: span.longitudeDelta * 0.7)
+                    // }
                     let region = MKCoordinateRegion(center: center, span: span)
                     
                     mapView.setRegion(region, animated: true)
